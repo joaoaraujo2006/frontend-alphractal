@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
 import { Backdrop } from "../components/Backdrop";
 import { Logo } from "../components/Logo";
-import { usingMockBackend } from "../lib/api";
 import { ApiError } from "../lib/errors";
 import "./LoginPage.css";
 
@@ -167,9 +166,7 @@ export function LoginPage() {
           </form>
 
           <p className="form__legal">
-            {usingMockBackend
-              ? "Backend simulado ativo — qualquer e-mail com senha de 6+ caracteres entra."
-              : "Protegido por criptografia de ponta a ponta"}
+            Protegido por criptografia de ponta a ponta
           </p>
         </section>
       </main>

@@ -14,6 +14,7 @@ export function Backdrop({ variant = "auth" }: BackdropProps) {
     <div className={`backdrop backdrop--${variant}`} aria-hidden="true">
       <div className="backdrop__base" />
       <div className="backdrop__aurora backdrop__aurora--left" />
+      <div className="backdrop__aurora backdrop__aurora--accent" />
       <div className="backdrop__aurora backdrop__aurora--right" />
       <div className="backdrop__aurora backdrop__aurora--top" />
       <div className="backdrop__grain" />
