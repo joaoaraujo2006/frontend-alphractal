@@ -84,6 +84,51 @@
     );
 }
 
+/* Dentro do app o conteúdo ocupa a tela toda, então o brilho fica na borda
+   direita para não competir com a leitura. */
+
+.backdrop--app .backdrop__base {
+  background:
+    radial-gradient(
+      70% 85% at 102% 52%,
+      rgba(33, 100, 214, 0.34) 0%,
+      rgba(13, 42, 104, 0.13) 42%,
+      transparent 72%
+    ),
+    radial-gradient(
+      55% 55% at 8% 104%,
+      rgba(22, 62, 148, 0.16) 0%,
+      transparent 70%
+    ),
+    linear-gradient(140deg, #05080f 0%, #02040a 55%, #010206 100%);
+}
+
+.backdrop--app .backdrop__aurora--left {
+  display: none;
+}
+
+.backdrop--app .backdrop__aurora--right {
+  inset: -15% -25% -15% 45%;
+  height: auto;
+  background: radial-gradient(
+    circle at 78% 50%,
+    rgba(38, 108, 224, 0.42),
+    transparent 62%
+  );
+}
+
+.backdrop--app .backdrop__aurora--top {
+  opacity: 0.5;
+}
+
+.backdrop--app .backdrop__vignette {
+  background: radial-gradient(
+    125% 105% at 28% 50%,
+    transparent 28%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+}
+
 @keyframes drift-a {
   from {
     transform: translate3d(0, 0, 0) scale(1);

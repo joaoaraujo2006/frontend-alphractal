@@ -1,9 +1,13 @@
 import { useState, type FormEvent } from "react";
-import { Backdrop } from "./Backdrop";
-import { Logo } from "./Logo";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/useAuth";
+import { Backdrop } from "../components/Backdrop";
+import { Logo } from "../components/Logo";
+import { usingMockBackend } from "../lib/api";
+import { ApiError } from "../lib/errors";
 import "./LoginPage.css";
 
-type Status = "idle" | "loading" | "done";
+type Status = "idle" | "loading";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE = /^\+?[\d\s()-]{8,}$/;
@@ -14,6 +18,11 @@ export function LoginPage() {
   const [revealed, setRevealed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
+
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo = (location.state as { from?: string } | null)?.from ?? "/";
 
   function validate() {
     const value = identifier.trim();
@@ -26,13 +35,24 @@ export function LoginPage() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     const problem = validate();
     setError(problem);
     if (problem) return;
 
     setStatus("loading");
-    await new Promise((resolve) => setTimeout(resolve, 1100));
-    setStatus("done");
+
+    try {
+      await signIn({ identifier: identifier.trim(), password });
+      navigate(redirectTo, { replace: true });
+    } catch (cause) {
+      setError(
+        cause instanceof ApiError
+          ? cause.message
+          : "Não foi possível entrar. Tente novamente.",
+      );
+      setStatus("idle");
+    }
   }
 
   return (
@@ -130,7 +150,7 @@ export function LoginPage() {
               role="status"
               aria-live="polite"
             >
-              {error ?? (status === "done" ? "Autenticado com sucesso." : "")}
+              {error ?? ""}
             </p>
 
             <button
@@ -147,7 +167,9 @@ export function LoginPage() {
           </form>
 
           <p className="form__legal">
-            Protegido por criptografia de ponta a ponta · <a href="#terms">Termos</a>
+            {usingMockBackend
+              ? "Backend simulado ativo — qualquer e-mail com senha de 6+ caracteres entra."
+              : "Protegido por criptografia de ponta a ponta"}
           </p>
         </section>
       </main>

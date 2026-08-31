@@ -1,12 +1,17 @@
 import "./Backdrop.css";
 
+type BackdropProps = {
+  /** `auth` acende o canto inferior esquerdo; `app` concentra o brilho à direita. */
+  variant?: "auth" | "app";
+};
+
 /**
  * Layered atmosphere: aurora bloom, drifting orbs, film grain and vignette.
  * Purely decorative — kept out of the accessibility tree.
  */
-export function Backdrop() {
+export function Backdrop({ variant = "auth" }: BackdropProps) {
   return (
-    <div className="backdrop" aria-hidden="true">
+    <div className={`backdrop backdrop--${variant}`} aria-hidden="true">
       <div className="backdrop__base" />
       <div className="backdrop__aurora backdrop__aurora--left" />
       <div className="backdrop__aurora backdrop__aurora--right" />

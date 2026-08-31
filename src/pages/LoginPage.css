@@ -39,12 +39,15 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.15rem;
   animation-delay: 0.05s;
 }
 
+/* The asset carries its own padding inside the viewBox, so the optical size
+   runs a few pixels smaller than the box. */
 .brand__mark {
-  filter: drop-shadow(0 0 22px rgba(47, 124, 246, 0.45));
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 26px rgba(47, 124, 246, 0.5));
 }
 
 .brand__word {
